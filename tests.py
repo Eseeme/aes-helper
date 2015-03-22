@@ -1,6 +1,7 @@
 from random import randint as rdm
 import aeshelper as aes
 import json
+import sys
 
 asserts_passed = 0
 asserts_failed = 0
@@ -48,16 +49,20 @@ def assert_crypto(assert_name, secret_key, str_to_test, verbose):
             "size_ratio": size_ratio
         })
 
-test_quantity = int(raw_input("Type the quantity of test to do: "))
+test_quantity = int(sys.argv[1])
+# test_quantity = 0
+# print sys.argv
 
 while test_quantity > 0:
     test_quantity -= 1
     assert_crypto(random_string(60), random_string(rdm(10,100)), random_string(rdm(30,6000)), False)
 
-print "Final results: " + str(asserts_total) + " total tests. " + str(asserts_passed) + ' passed, ' + str(asserts_failed) + ' failed.'
-export_option = raw_input("Do you want to export the tests data to a JSON file? (y/n) ")
-if export_option == 'y':
-    f = open('lastUnitTestsResults.json', 'w')
-    f.write(json.dumps(export))
-    f.close()
-    print "Successfully exported as lastUnitTestsResults.json"
+print "Tests results: " + str(asserts_total) + " total tests. " + str(asserts_passed) + ' passed, ' + str(asserts_failed) + ' failed.'
+try:
+    if sys.argv[3] == "--save":
+        f = open('lastUnitTestsResults.json', 'w')
+        f.write(json.dumps(export))
+        f.close()
+        print "Successfully exported as lastUnitTestsResults.json"
+except:
+    pass
