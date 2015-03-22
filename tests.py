@@ -33,7 +33,7 @@ def assert_crypto(assert_name, secret_key, str_to_test, verbose):
     if assert_pass:
         asserts_passed += 1
         if verbose: print '\n--------------------------------------------------'
-        print assert_name + " [PASSED]"
+        print assert_name + " [PASSED] (values %s,%s,%s)" % (str(len(encrypted)),str(len(decrypted)),str(len(secret_key)))
         if verbose: print "Input string:     " + str_to_test
         if verbose: print "Secret key: " + secret_key
         if verbose: print "Encrypted string: " + encrypted
@@ -55,7 +55,7 @@ test_quantity = int(sys.argv[1])
 
 while test_quantity > 0:
     test_quantity -= 1
-    assert_crypto(random_string(60), random_string(rdm(10,100)), random_string(rdm(30,6000)), False)
+    assert_crypto(random_string(60), random_string(rdm(1,10000)), random_string(rdm(1,10000)), False)
 
 print "Tests results: " + str(asserts_total) + " total tests. " + str(asserts_passed) + ' passed, ' + str(asserts_failed) + ' failed.'
 try:
